@@ -2,6 +2,8 @@ local M = {}
 
 local config = require("starmark.config")
 local marks = require("starmark.marks")
+local persistence = require("starmark.persistence")
+local signs = require("starmark.signs")
 
 ---@return string[]
 function M.format_lines()
@@ -78,6 +80,16 @@ function M.open()
     end, { buffer = float_buf, nowait = true })
   end
 
+  -- Delete mark under cursor
+  vim.keymap.set("n", "dd", function()
+    local line = vim.api.nvim_get_current_line()
+    local slot = tonumber(line:match("%[(%d)%]"))
+    if slot then
+      M.delete_entry(slot)
+      M.open()
+    end
+  end, { buffer = float_buf, nowait = true })
+
   -- Close on q or Escape
   vim.keymap.set("n", "q", M.close, { buffer = float_buf, nowait = true })
   vim.keymap.set("n", "<Esc>", M.close, { buffer = float_buf, nowait = true })
@@ -89,6 +101,17 @@ function M.toggle()
   else
     M.open()
   end
+end
+
+--- Delete a mark by slot, saving persistence and updating signs.
+---@param slot number 0-9
+function M.delete_entry(slot)
+  marks.clear_mark(slot)
+  local cfg = config.get()
+  if cfg.persistence then
+    persistence.save()
+  end
+  signs.update_buf(vim.api.nvim_get_current_buf())
 end
 
 --- Build a sorted list of picker entry data from current marks.
@@ -152,12 +175,32 @@ local function pick_telescope()
       }),
       sorter = conf.generic_sorter({}),
       previewer = conf.grep_previewer({}),
-      attach_mappings = function(prompt_bufnr, _)
+      attach_mappings = function(prompt_bufnr, map)
         actions.select_default:replace(function()
           actions.close(prompt_bufnr)
           local selection = action_state.get_selected_entry()
           if selection then
             jump_to_entry(selection.value)
+          end
+        end)
+        map({ "i", "n" }, "<C-d>", function()
+          local selection = action_state.get_selected_entry()
+          if selection then
+            M.delete_entry(selection.value.slot)
+            local current_picker = action_state.get_current_picker(prompt_bufnr)
+            current_picker:refresh(finders.new_table({
+              results = M.picker_entries(),
+              entry_maker = function(entry)
+                return {
+                  value = entry,
+                  display = entry.display,
+                  ordinal = entry.display,
+                  filename = entry.file,
+                  lnum = entry.line,
+                  col = entry.col + 1,
+                }
+              end,
+            }), { reset_prompt = false })
           end
         end)
         return true
@@ -194,6 +237,22 @@ local function pick_snacks()
         jump_to_entry(item.item)
       end
     end,
+    actions = {
+      delete = function(picker, item)
+        if item and item.item then
+          M.delete_entry(item.item.slot)
+          picker:close()
+          pick_snacks()
+        end
+      end,
+    },
+    win = {
+      input = {
+        keys = {
+          ["<C-d>"] = { "delete", mode = { "i", "n" } },
+        },
+      },
+    },
   })
   return true
 end
@@ -221,6 +280,14 @@ local function pick_fzflua()
           local entry = lookup[selected[1]]
           if entry then
             jump_to_entry(entry)
+          end
+        end
+      end,
+      ["ctrl-d"] = function(selected)
+        if selected and selected[1] then
+          local entry = lookup[selected[1]]
+          if entry then
+            M.delete_entry(entry.slot)
           end
         end
       end,

@@ -79,4 +79,43 @@ describe("starmark.ui", function()
       assert.equals(ui.picker_entries, ui.telescope_entries)
     end)
   end)
+
+  describe("delete_entry", function()
+    it("removes a mark from picker_entries", function()
+      marks.set_mark(2, "/tmp/a.lua", 10, 0)
+      marks.set_mark(5, "/tmp/b.lua", 50, 3)
+
+      ui.delete_entry(2)
+
+      local entries = ui.picker_entries()
+      assert.equals(1, #entries)
+      assert.equals(5, entries[1].slot)
+    end)
+
+    it("persists deletion when persistence is enabled", function()
+      local config = require("starmark.config")
+      config.setup({ notify = false, persistence = true })
+      local persistence = require("starmark.persistence")
+      local saved = false
+      local orig_save = persistence.save
+      persistence.save = function()
+        saved = true
+      end
+
+      marks.set_mark(0, "/tmp/a.lua", 1, 0)
+      ui.delete_entry(0)
+
+      assert.is_true(saved)
+      persistence.save = orig_save
+    end)
+
+    it("is a no-op for empty slots", function()
+      marks.set_mark(1, "/tmp/a.lua", 10, 0)
+
+      ui.delete_entry(7)
+
+      local entries = ui.picker_entries()
+      assert.equals(1, #entries)
+    end)
+  end)
 end)

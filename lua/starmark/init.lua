@@ -111,6 +111,17 @@ local function setup_keymaps()
   vim.keymap.set("n", "<leader>mx", function()
     M.clear_mark()
   end, vim.tbl_extend("force", opts, { desc = "Starmark: clear mark" }))
+
+  -- Collapse digit keymaps in which-key if available
+  local wk_ok, wk = pcall(require, "which-key")
+  if wk_ok then
+    local hidden = {}
+    for i = 0, 9 do
+      table.insert(hidden, { "<leader>" .. i, hidden = true })
+    end
+    wk.add(hidden)
+    wk.add({ { "<leader>#", desc = "Starmark: jump to mark #" } })
+  end
 end
 
 ---@param opts table?
