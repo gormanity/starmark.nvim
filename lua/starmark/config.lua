@@ -5,7 +5,11 @@ local defaults = {
   project_root = nil,
   marks_path = vim.fn.stdpath("data") .. "/starmark",
   keymaps = true,
-  notify = true,
+  notify = {
+    mark = true,
+    jump = true,
+    error = true,
+  },
   ui = {
     width = 60,
     height = 12,
@@ -33,7 +37,13 @@ local function deep_merge(base, override)
 end
 
 function M.setup(opts)
-  current = deep_merge(defaults, opts or {})
+  opts = opts or {}
+  -- Backward compat: expand boolean notify to table
+  if type(opts.notify) == "boolean" then
+    local val = opts.notify
+    opts.notify = { mark = val, jump = val, error = val }
+  end
+  current = deep_merge(defaults, opts)
 end
 
 function M.get()

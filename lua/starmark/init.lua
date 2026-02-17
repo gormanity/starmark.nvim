@@ -18,7 +18,7 @@ function M.set_mark(slot)
   marks.set_mark(slot, file, pos[1], pos[2])
 
   local cfg = config.get()
-  if cfg.notify then
+  if cfg.notify.mark then
     local display = vim.fn.fnamemodify(file, ":~:.")
     vim.notify(string.format("starmark: [%d] set at %s:%d", slot, display, pos[1]))
   end
@@ -35,7 +35,7 @@ function M.jump_to_mark(slot)
   local mark = marks.get_mark(slot)
   if not mark then
     local cfg = config.get()
-    if cfg.notify then
+    if cfg.notify.error then
       vim.notify(string.format("starmark: slot [%d] is empty", slot), vim.log.levels.WARN)
     end
     return
@@ -45,7 +45,7 @@ function M.jump_to_mark(slot)
   vim.api.nvim_win_set_cursor(0, { mark.line, mark.col })
 
   local cfg = config.get()
-  if cfg.notify then
+  if cfg.notify.jump then
     local display = vim.fn.fnamemodify(mark.file, ":~:.")
     vim.notify(string.format("starmark: jumped to [%d] %s:%d", slot, display, mark.line))
   end
@@ -56,7 +56,7 @@ function M.clear_mark(slot)
   if slot then
     marks.clear_mark(slot)
     local cfg = config.get()
-    if cfg.notify then
+    if cfg.notify.mark then
       vim.notify(string.format("starmark: cleared slot [%d]", slot))
     end
     if cfg.persistence then
@@ -72,7 +72,10 @@ function M.clear_mark(slot)
     end
     local s = tonumber(input)
     if not s or s < 0 or s > 9 then
-      vim.notify("starmark: invalid slot", vim.log.levels.WARN)
+      local cfg = config.get()
+      if cfg.notify.error then
+        vim.notify("starmark: invalid slot", vim.log.levels.WARN)
+      end
       return
     end
     M.clear_mark(s)
