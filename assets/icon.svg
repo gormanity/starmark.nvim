@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e6c94a"/>
+      <stop offset="100%" style="stop-color:#c9962a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <g opacity="0.07" stroke="#4fc3f7" stroke-width="1">
+    <line x1="0" y1="128" x2="512" y2="128"/>
+    <line x1="0" y1="256" x2="512" y2="256"/>
+    <line x1="0" y1="384" x2="512" y2="384"/>
+    <line x1="128" y1="0" x2="128" y2="512"/>
+    <line x1="256" y1="0" x2="256" y2="512"/>
+    <line x1="384" y1="0" x2="384" y2="512"/>
+  </g>
+
+  <!-- Star centered at 256 -->
+  <polygon
+    points="256,75 286.7,160.5 375,160.5 305.6,213.5 331.3,299 256,248 180.7,299 206.4,213.5 137,160.5 225.3,160.5"
+    fill="url(#starGrad)" opacity="0.95"/>
+  <polygon
+    points="256,75 286.7,160.5 375,160.5 305.6,213.5 331.3,299 256,248 180.7,299 206.4,213.5 137,160.5 225.3,160.5"
+    fill="none" stroke="#f5d76e" stroke-width="3" opacity="0.4"/>
+
+  <line x1="56" y1="328" x2="456" y2="328" stroke="#4fc3f7" stroke-width="1" opacity="0.3"/>
+
+  <!-- Row 1: slots 0-4, total width=340, start_x=86, centered at 256 -->
+  <rect x="86"  y="340" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="116" y="371" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">0</text>
+
+  <rect x="156" y="340" width="60" height="46" rx="8" fill="#1c2e1a" stroke="#e6c94a" stroke-width="2.5"/>
+  <text x="186" y="371" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#e6c94a">1</text>
+
+  <rect x="226" y="340" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="256" y="371" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">2</text>
+
+  <rect x="296" y="340" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="326" y="371" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">3</text>
+
+  <rect x="366" y="340" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="396" y="371" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">4</text>
+
+  <!-- Row 2: slots 5-9 -->
+  <rect x="86"  y="398" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="116" y="429" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">5</text>
+
+  <rect x="156" y="398" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="186" y="429" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">6</text>
+
+  <rect x="226" y="398" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="256" y="429" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">7</text>
+
+  <rect x="296" y="398" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="326" y="429" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">8</text>
+
+  <rect x="366" y="398" width="60" height="46" rx="8" fill="#1a2332" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="396" y="429" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" font-weight="700" fill="#4fc3f7">9</text>
+
+  <!-- Active mark indicator on slot 1 -->
+  <circle cx="186" cy="343" r="6" fill="#e6c94a"/>
+</svg>

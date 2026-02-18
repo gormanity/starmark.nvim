@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.svg" width="180" alt="starmark.nvim icon"/>
+</p>
+
 # starmark.nvim
 
 StarCraft-style marks for Neovim. Set marks on file positions with `Ctrl+{0-9}`, jump to them with `<leader>{0-9}`.
