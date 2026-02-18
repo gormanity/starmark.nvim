@@ -1,6 +1,11 @@
 <p align="center">
   <img src="assets/icon.svg" width="180" alt="starmark.nvim icon"/>
 </p>
+<p align="center">
+  <a href="https://github.com/gormanity/starmark.nvim/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/gormanity/starmark.nvim/actions/workflows/ci.yml/badge.svg" />
+  </a>
+</p>
 
 # starmark.nvim
 
