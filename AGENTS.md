@@ -17,3 +17,6 @@ Neovim plugin for StarCraft-style position marking. Set marks with `Ctrl+{0-9}`,
 - Use `vim.notify` for user-facing messages (respects `config.notify`)
 - Marks are indexed 0-9 (10 slots, like StarCraft control groups)
 - Persistence uses JSON, stored per-project in `vim.fn.stdpath("data") .. "/starmark/"`
+
+## Releases
+- Cut a release (tag) after user-facing changes land, or when a set of related fixes/features is ready to ship.
