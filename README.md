@@ -11,11 +11,13 @@
 
 StarCraft-style marks for Neovim. Set marks on file positions with `Ctrl+{0-9}`, jump to them with `<leader>{0-9}`.
 
+Inspired by [Harpoon](https://github.com/ThePrimeagen/harpoon/tree/harpoon2), with the goal of getting closer to ThePrimeagen's StarCraft-like flow in Neovim.
+
 ## Why?
 
-- **Intuitive mental model** — RTS control group style: assign units (positions) to groups (slots), recall them instantly
-- **10 slots** (0-9), not just 4
-- **Persistent per-project** — marks survive across Neovim sessions
+- **Intuitive mental model**: RTS control group style. Assign units (positions) to groups (slots), recall them instantly.
+- **10 slots per project** (0-9)
+- **Persistent per-project**: marks survive across Neovim sessions
 - **Built-in float UI** + picker support (Snacks.nvim, Telescope, fzf-lua)
 
 ## Install
@@ -60,12 +62,13 @@ require("starmark").setup({
 
 ## Commands
 
-- `:Starmark` / `:StarmarkPick` — open the mark picker
-- `:StarmarkTelescope` — alias for `:StarmarkPick` (backward compat)
+- `:Starmark` / `:StarmarkPick`: open the mark picker
+- `:StarmarkTelescope`: alias for `:StarmarkPick` (backward compat)
 
 ## Picker
 
-`<leader>M` or `:Starmark` opens a picker. With `picker = "auto"` (default), the first available picker is used: Snacks.nvim → Telescope → fzf-lua → builtin float.
+`<leader>M` or `:Starmark` opens a picker. With `picker = "auto"` (default), the first available picker is used: Snacks.nvim, Telescope, fzf-lua, then the builtin float.
+Use `Ctrl+d` in the picker to clear the selected mark.
 
 ## Float UI
 
